@@ -1,28 +1,22 @@
 package edu.grupp1a.langdskidtavlingen.skidakare;
 
-
-public class SkidAkare extends Person implements Comparable<SkidAkare>{
+public class SkidAkare extends Person implements Comparable<SkidAkare> {
 	
 	private long startTid;
+	private long mellanTid;
+	private long malgangsTid;
 	
 	private int startNummer;
-	
-	private long mellanTid;
 
-	public SkidAkare(String namn, long startTid, int startNummer, long mellanTid) {
+
+	public SkidAkare(String namn, long startTid, long mellanTid, long malgangsTid, int startNummer) {
 		super(namn);
 		this.startTid = startTid;
-		this.startNummer = startNummer;
 		this.mellanTid = mellanTid;
+		this.malgangsTid = malgangsTid;
+		this.startNummer = startNummer;
 	}
-
-	public long getStartTid() {
-		return startTid;
-	}
-
-	public void setStartTid(long starttid) {
-		this.startTid = starttid;
-	}
+	
 
 	public int getStartNummer() {
 		return startNummer;
@@ -32,34 +26,50 @@ public class SkidAkare extends Person implements Comparable<SkidAkare>{
 		this.startNummer = startNummer;
 	}
 
+	public long getStartTid() {
+		return startTid;
+	}
+
+	public void setStartTid(long startTid) {
+		this.startTid = startTid;
+	}
+
 	public long getMellanTid() {
 		return mellanTid;
 	}
 
-	public void setMellanTid(long mellantid) {
-		this.mellanTid = mellantid;
+	public void setMellanTid(long mellanTid) {
+		this.mellanTid = mellanTid;
 	}
+
+	public long getMalgangsTid() {
+		return malgangsTid;
+	}
+
+	public void setMalgangsTid(long malgangsTid) {
+		this.malgangsTid = malgangsTid;
+	}
+
+
 
 	@Override
 	public String toString() {
-		return "SkidAkare [starttid=" + startTid + ", startNummer=" + startNummer + ", mellantid=" + mellanTid
-				+ ", getNamn()=" + getNamn() + "]";
-	}
-	
-	
-	public int compareTo(SkidAkare a) {
+		return "SkidAkare [startTid=" + startTid + ", mellanTid=" + mellanTid + ", malgangsTid=" + malgangsTid
+				+ ", startNummer=" + startNummer + ", getNamn()=" + getNamn() + "]";
 		
-		if(mellanTid < a.mellanTid)
+		//return "#" + startNummer + " " + getNamn();
+	}
+
+
+	@Override
+	public int compareTo(SkidAkare a) {
+		if(malgangsTid < a.malgangsTid)
 			return -1;
-		else if(mellanTid > a.mellanTid)
+		else if(malgangsTid > a.malgangsTid)
 			return 1;
 		else
 			return 0;
-		
 	}
 	
-	
-	
-	
-
 }
+

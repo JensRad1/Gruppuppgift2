@@ -1,6 +1,10 @@
 package edu.grupp1a.langdskidtavlingen.skidtavlingar;
 
-import edu.grupp1a.langdskidtavlingen.anmalan.Masstart;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+import edu.grupp1a.langdskidtavlingen.anmalan.Anmalan;
+import edu.grupp1a.langdskidtavlingen.meny.Meny;
 import edu.grupp1a.langdskidtavlingen.skidakare.SkidAkare;
 import edu.grupp1a.langdskidtavlingen.skidbana.SkidBana;
 
@@ -8,25 +12,30 @@ public class SkidTavlingar {
 
 	public static void main(String[] args) {
 		
-		SkidAkare skidAkareA = new SkidAkare("Johan Johansson", 0, 0, 0);
-		SkidAkare skidAkareB = new SkidAkare("Oscar Johansson", 0, 0, 0);
+		Scanner input = new Scanner(System.in);
 		
-		SkidAkare[] skidAkare = {skidAkareA, skidAkareB};
+		var startandeAkare = new LinkedList<SkidAkare>();		
+		var mellanTidsAkare = new LinkedList<SkidAkare>();		
+		var malgangsAkare = new LinkedList<SkidAkare>();
 		
-		long tavlingsStartTid = System.currentTimeMillis();
 		
-		Masstart masstart = new Masstart(tavlingsStartTid);
+		Anmalan anmal = new Anmalan(input, startandeAkare);		
 		
-		masstart.anmalSkidakare(skidAkare);
+		anmal.laggTillSkidAkare();
 		
-		SkidBana aktuellTavling = new SkidBana(skidAkare);
+		anmal.angeIntervallTid();
 		
-		//...
+		anmal.anmalSkidAkare();
 		
-				
-		aktuellTavling.addMellantid(205);	//Test
+		
+		Meny meny = new Meny(input, new SkidBana(startandeAkare, mellanTidsAkare, malgangsAkare));
+		
+		meny.tavlingsMeny();
+		
+		
+		input.close();
+		
 
-		
-		
 	}
+
 }

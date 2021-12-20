@@ -12,6 +12,5 @@ abstract class Person {
 	public String getNamn() {
 		return namn;
 	}
-	
 
 }
