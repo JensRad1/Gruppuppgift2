@@ -1,6 +1,7 @@
 package edu.grupp1a.langdskidtavlingen.anmalan;
 
 import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import edu.grupp1a.langdskidtavlingen.skidakare.SkidAkare;
@@ -24,9 +25,39 @@ public class Anmalan {
 
 	public void angeIntervallTid() {
 		
-		System.out.println("Vilken intervalltid har tävlingen (millisekunder)?: ");
+		long svar = 0;
 		
-		intervallTid = input.nextInt();
+		do {
+			
+			System.out.println("Vilken intervalltid har tävlingen (millisekunder)?: ");
+			
+			svar = inputNummer();
+			
+			if(svar > 0) {
+				intervallTid = svar;
+				break;
+			}
+			else
+				continue;
+				
+		
+		} while(true);
+		
+	}
+	
+	private long inputNummer() {
+		
+		try {
+			long val = 0;
+			val = input.nextLong();
+			return val;
+			
+		} catch (InputMismatchException e) {
+			input.nextLine();
+			System.out.println("Felaktig indata. Ange ett heltal.");
+			return 0;
+		}
+		
 	}
 	
 	public void anmalSkidAkare() {
