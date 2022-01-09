@@ -122,19 +122,6 @@ public class SkidBana {
 		
 	}
 	
-//	public void visaStartLista() {
-//		
-//		double intervallTid = (startandeAkare.get(1).getStartTid() - startandeAkare.get(0).getStartTid())/1000d;		
-//		
-//		System.out.println("\nStartlista:");
-//		
-//		for(int i=0; i<startandeAkare.size();i++) {
-//			
-//			System.out.println("+" + intervallTid*i + " s\t | " + startandeAkare.get(i));			
-//		}
-//
-//	}
-	
 	public void visaStartLista() {
 		
 		double intervallTid = (startandeAkare.get(1).getStartTid() - startandeAkare.get(0).getStartTid())/1000d;		
