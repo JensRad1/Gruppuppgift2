@@ -22,18 +22,26 @@ public class SkidBana {
 		
 		int position = startNrTillElementPos(startandeAkare, startNummer);		
 		
+		//finns angiven åkare i startfältet? har åkaren redan en mellantid?
 		if(position >= 0 && startandeAkare.get(position).getMellanTid() == 0)	{	
 		
 			akaren = startandeAkare.get(position);
 			
-			long mellanTiden = System.currentTimeMillis() - akaren.getStartTid();
+			//kan bara lägga till mellantid om åkaren har startat
+			if(akaren.getStartTid() - System.currentTimeMillis() < 0) {
 			
-			akaren.setMellanTid(mellanTiden);
+				long mellanTiden = System.currentTimeMillis() - akaren.getStartTid();
+				
+				akaren.setMellanTid(mellanTiden);
+				
+				mellanTidsAkare.add(akaren);
+				
+				System.out.println("Har lagt till mellantid för: \"" + "#" + akaren.getStartNummer()
+				+ " " + akaren.getNamn() +"\". ");
 			
-			mellanTidsAkare.add(akaren);
-			
-			System.out.println("Har lagt till mellantid för: \"" + "#" + akaren.getStartNummer()
-			+ " " + akaren.getNamn() +"\". ");
+			}
+			else
+				System.out.println("Angiven åkare har inte startat ännu");
 			
 		}
 		else
@@ -74,17 +82,19 @@ public class SkidBana {
 			
 			SkidAkare akaren = mellanTidsAkare.get(position);
 			
+			//har akaren gått i mål så finns den ej i malgangsakare
 			if(malgangsAkare.indexOf(akaren) < 0) {
 			
 				System.out.println("Åkare \"" + akaren.getNamn() + "\" ligger på plats "
 					+ (mellanTidsAkare.indexOf(akaren) + 1) + " och har mellantiden: "
-					+ akaren.getMellanTid()/1000d + " s, samt totala åktiden: "
-					+ (System.currentTimeMillis() - akaren.getStartTid()) / 1000d + " s");
+					+ akaren.getMellanTid()/1000d);
+
 			}
 			else {
 				
-				System.out.println("Åkare \"" + akaren.getNamn() + "\" har gått i mål och hamnade på plats "
-						+ (malgangsAkare.indexOf(akaren) + 1) + " och hade åktiden " + akaren.getMalgangsTid()/1000d + " s");
+				Collections.sort(malgangsAkare);
+				System.out.println("Åkare \"" + akaren.getNamn() + "\" har gått i mål och har plats "
+						+ (malgangsAkare.indexOf(akaren) + 1) + " och hade totala åktiden " + akaren.getMalgangsTid()/1000d + " s");
 				
 				
 			}
@@ -159,6 +169,11 @@ public class SkidBana {
 		
 		if(mellanTidsAkare.size() == 0)
 			System.out.println("Inga åkare har passerat mellantiden ännu.");
+	}
+	
+	public long visaTavlingStartTid() {
+		
+		return startandeAkare.get(0).getStartTid();
 	}
 
 }
