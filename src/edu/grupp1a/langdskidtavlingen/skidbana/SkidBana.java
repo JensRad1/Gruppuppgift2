@@ -8,12 +8,16 @@ import edu.grupp1a.langdskidtavlingen.skidakare.*;
 public class SkidBana {
 	
 	private List<SkidAkare> startandeAkare, mellanTidsAkare, malgangsAkare;
+	
+	private ExternJamforare ext;
 
 	public SkidBana(List<SkidAkare> startandeAkare, List<SkidAkare> mellanTidsAkare, List<SkidAkare> malgangsAkare) {
 		super();
 		this.startandeAkare = startandeAkare;
 		this.mellanTidsAkare = mellanTidsAkare;
 		this.malgangsAkare = malgangsAkare;
+		
+		ext = new ExternJamforare();
 	}
 	
 	public void laggTillMellantid(int startNummer) {
@@ -36,8 +40,7 @@ public class SkidBana {
 				
 				mellanTidsAkare.add(akaren);
 				
-				System.out.println("Har lagt till mellantid för: \"" + "#" + akaren.getStartNummer()
-				+ " " + akaren.getNamn() +"\". ");
+				System.out.println("Har lagt till mellantiden: " + mellanTiden/1000d +" s, för: \"" + akaren +"\". ");
 			
 			}
 			else
@@ -71,33 +74,18 @@ public class SkidBana {
 	
 	public void visaAkaresPlaceringOchTid(int startNummer) {
 				
-		ExternJamforare ext = new ExternJamforare();
-				
-		Collections.sort(mellanTidsAkare, ext);
-		
+		Collections.sort(mellanTidsAkare, ext);		
 		
 		int position = startNrTillElementPos(mellanTidsAkare, startNummer);
 		
 		if (position >= 0) {
 			
-			SkidAkare akaren = mellanTidsAkare.get(position);
+			SkidAkare akaren = mellanTidsAkare.get(position);			
 			
-			//har akaren gått i mål så finns den ej i malgangsakare
-			if(malgangsAkare.indexOf(akaren) < 0) {
+			System.out.println("Åkare \"" + akaren + "\" har mellantid: "
+					+ akaren.getMellanTid()/1000d + " s, samt har mellantidsplacering på plats "
+					+ (mellanTidsAkare.indexOf(akaren) + 1) + ".");
 			
-				System.out.println("Åkare \"" + akaren.getNamn() + "\" ligger på plats "
-					+ (mellanTidsAkare.indexOf(akaren) + 1) + " och har mellantiden: "
-					+ akaren.getMellanTid()/1000d);
-
-			}
-			else {
-				
-				Collections.sort(malgangsAkare);
-				System.out.println("Åkare \"" + akaren.getNamn() + "\" har gått i mål och har plats "
-						+ (malgangsAkare.indexOf(akaren) + 1) + " och hade totala åktiden " + akaren.getMalgangsTid()/1000d + " s");
-				
-				
-			}
 		}
 		else
 			System.out.println("Angiven åkare har inte fått en mellantid ännu");	
@@ -121,8 +109,8 @@ public class SkidBana {
 				
 				malgangsAkare.add(akaren);
 				
-				System.out.println("Har angett målgång för: \"" + "#" + akaren.getStartNummer()
-				+ " " + akaren.getNamn() +"\". ");
+				System.out.println("Har angett målgång för: \"" + akaren + "\".");
+				
 			}
 			else {
 				System.out.println("Angiven åkare har redan gått i mål eller saknar en mellantid");
@@ -136,21 +124,28 @@ public class SkidBana {
 	
 	public void visaStartLista() {
 		
-		System.out.println("Startlista:");
+		double intervallTid = (startandeAkare.get(1).getStartTid() - startandeAkare.get(0).getStartTid())/1000d;		
 		
-		for(var element : startandeAkare)
-			System.out.println("#" + element.getStartNummer() + " " +  element);		
+		System.out.println("\nStartlista:");
+		
+		for(int i=0; i<startandeAkare.size();i++) {
+			
+			System.out.println("+" + intervallTid*i + " s\t | " + startandeAkare.get(i));			
+		}
 
 	}
 	
 	public void visaResultatLista() {
 		
+		Collections.sort(malgangsAkare);
+		
 		System.out.println("\nResultatlista:");
 		
 		for(int i=0; i<malgangsAkare.size(); i++) {
 			
-			System.out.println("Placering " + (i+1) + " " + " | #" + malgangsAkare.get(i).getStartNummer()
-					+ " " +  malgangsAkare.get(i));
+			System.out.println("Placering " + (i+1) + "  | " + malgangsAkare.get(i) + "\t| Slutgiltig åktid: " 
+					+ malgangsAkare.get(i).getMalgangsTid()/1000d + " s");
+			
 		}
 		
 		if(malgangsAkare.size() == 0)
@@ -159,21 +154,24 @@ public class SkidBana {
 	
 	public void visaMellantiderLista() {
 		
+		Collections.sort(mellanTidsAkare, ext);	
+		
 		System.out.println("\nMellantidslista:");
 		
 		for(int i=0; i<mellanTidsAkare.size(); i++) {
 			
-			System.out.println("Placering " + (i+1) + " " + " | #" + mellanTidsAkare.get(i).getStartNummer()
-					+ " " +  mellanTidsAkare.get(i));				
+			System.out.println("Placering " + (i+1) + "  | " + mellanTidsAkare.get(i) + "\t| Mellantid: " 
+					+ mellanTidsAkare.get(i).getMellanTid()/1000d + " s");
 		}
 		
 		if(mellanTidsAkare.size() == 0)
-			System.out.println("Inga åkare har passerat mellantiden ännu.");
+			System.out.println("Inga åkare har passerat mellantidspunkten ännu.");
 	}
 	
-	public long visaTavlingStartTid() {
+	
+	public double visaAktuellTavlingsTid() {
 		
-		return startandeAkare.get(0).getStartTid();
+		return (System.currentTimeMillis() - startandeAkare.get(0).getStartTid())/1000d;
 	}
 
 }

@@ -50,14 +50,10 @@ public class SkidAkare extends Person implements Comparable<SkidAkare> {
 		this.malgangsTid = malgangsTid;
 	}
 
-
-
+	
 	@Override
-	public String toString() {
-		return "SkidAkare [startTid=" + startTid + ", mellanTid=" + mellanTid + ", malgangsTid=" + malgangsTid
-				+ ", startNummer=" + startNummer + ", getNamn()=" + getNamn() + "]";
-		
-		//return "#" + startNummer + " " + getNamn();
+	public String toString() {		
+		return "#" + startNummer + " " + getNamn();
 	}
 
 

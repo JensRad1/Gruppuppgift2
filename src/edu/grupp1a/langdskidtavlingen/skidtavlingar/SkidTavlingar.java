@@ -33,8 +33,7 @@ public class SkidTavlingar {
 		meny.tavlingsMeny();
 		
 		
-		input.close();
-		
+		input.close();		
 
 	}
 

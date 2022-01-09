@@ -53,13 +53,13 @@ public class Meny {
 	}
 
 
-
-
-	private void printMeny() {
-				
-		String multiStr = """
-				\nSKIDTÄVLING - INTERVALL
-				
+	private void printMeny() {		
+		
+		
+		String strA = """
+				\n\nSKIDTÄVLING - INTERVALL\n""";
+		
+		String multiStr = """				
 				(1) Lägg till åkares mellantid
 				(2) Visa åkares aktuella placering samt åktid
 				(3) Ange målgång för åkare
@@ -67,7 +67,7 @@ public class Meny {
 				(5) Avsluta
 				Ange val: """;
 		
-		System.out.println(multiStr);
+		System.out.println(strA + "\nTid sedan start: " + aktuellTavling.visaAktuellTavlingsTid() + " s\n\n" + multiStr);
 	}
 	
 	private int inputNummer() {
@@ -87,14 +87,15 @@ public class Meny {
 	
 	private void laggTillMellantid() {		
 		
-		System.out.println("\n-Lägg till Mellantid-");
+		System.out.println("\n-Lägg till Mellantid-");		
 		
 		aktuellTavling.visaStartLista();
 		
+		System.out.println("\nTid sedan start: " + aktuellTavling.visaAktuellTavlingsTid() + " s");
+		
 		System.out.println("\nAnge åkares startnummer: ");
 		
-		aktuellTavling.laggTillMellantid(inputNummer());
-			
+		aktuellTavling.laggTillMellantid(inputNummer());			
 		
 	}
 	
@@ -104,7 +105,9 @@ public class Meny {
 		
 		aktuellTavling.visaStartLista();
 		
-		System.out.println("Ange åkares startnummer: ");
+		System.out.println("\nTid sedan start: " + aktuellTavling.visaAktuellTavlingsTid() + " s");
+		
+		System.out.println("\nAnge åkares startnummer: ");
 		
 		aktuellTavling.visaAkaresPlaceringOchTid(inputNummer());		
 		
@@ -116,14 +119,16 @@ public class Meny {
 		
 		aktuellTavling.visaStartLista();
 		
-		System.out.println("Ange åkares startnummer: ");
+		System.out.println("\nTid sedan start: " + aktuellTavling.visaAktuellTavlingsTid() + " s");
+		
+		System.out.println("\nAnge åkares startnummer: ");
 		
 		aktuellTavling.angeMalgang(inputNummer());
 	}
 	
 	private void visaStartOchResultatListor() {
 		
-		System.out.println("\n-Start och resultatlistorna-\n");
+		System.out.println("\n-Start och resultatlistorna-");
 		
 		aktuellTavling.visaStartLista();
 		
